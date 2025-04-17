@@ -1,0 +1,30 @@
+{
+    "salles": [
+        "Entrée",
+        "Couloir obscur",
+        "Salle du trésor",
+        "Salle des énigmes",
+        "Bibliothèque",
+        "Laboratoire",
+        "Chambre du roi",
+        "Jardin secret"
+    ],
+    "objets": [
+        "clé en or",
+        "lampe torche",
+        "carte ancienne",
+        "potion magique",
+        "épée rouillée"
+    ],
+    "personnages": [
+        "gardien",
+        "marchand",
+        "fantôme",
+        "sage"
+    ],
+    "enigmes": [
+        "Résoudre l’énigme de la porte scellée",
+        "Trouver le mot de passe dans les livres",
+        "Utiliser la potion au bon endroit"
+    ]
+}
