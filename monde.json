@@ -1,30 +1,116 @@
 {
-    "salles": [
-        "Entrée",
-        "Couloir obscur",
-        "Salle du trésor",
-        "Salle des énigmes",
-        "Bibliothèque",
-        "Laboratoire",
-        "Chambre du roi",
-        "Jardin secret"
-    ],
-    "objets": [
-        "clé en or",
-        "lampe torche",
-        "carte ancienne",
-        "potion magique",
-        "épée rouillée"
-    ],
-    "personnages": [
-        "gardien",
-        "marchand",
-        "fantôme",
-        "sage"
-    ],
-    "enigmes": [
-        "Résoudre l’énigme de la porte scellée",
-        "Trouver le mot de passe dans les livres",
-        "Utiliser la potion au bon endroit"
-    ]
+    "salles": {
+        "Entrée": {
+            "description": "Tu es à l'entrée du donjon. Un vent glacial souffle derrière toi.",
+            "objets": [
+                "lampe torche"
+            ],
+            "directions": {
+                "nord": "Couloir obscur",
+                "ouest": "Bibliothèque"
+            },
+            "enigme": "Je commence la nuit et termine le matin. Qui suis-je ?",
+            "personnage": null
+        },
+        "Couloir obscur": {
+            "description": "Un couloir sombre. Tu entends tes pas résonner.",
+            "objets": [
+                "clé en or"
+            ],
+            "directions": {
+                "sud": "Entrée",
+                "est": "Salle des énigmes"
+            },
+            "enigme": "Plus je suis noir, plus je suis propre. Qui suis-je ?",
+            "personnage": null
+        },
+        "Salle des énigmes": {
+            "description": "Des symboles brillent faiblement sur les murs.",
+            "objets": [
+                "carte ancienne"
+            ],
+            "directions": {
+                "ouest": "Couloir obscur",
+                "nord": "Salle du trésor"
+            },
+            "enigme": "Je marche à quatre pattes le matin, deux le midi, trois le soir. Qui suis-je ?",
+            "personnage": "Gardien des secrets"
+        },
+        "Salle du trésor": {
+            "description": "Une grande salle pleine de coffres mystérieux.",
+            "objets": [
+                "potion magique"
+            ],
+            "directions": {
+                "sud": "Salle des énigmes",
+                "est": "Cave secrète"
+            },
+            "enigme": "Je suis précieux mais ne peux être volé.",
+            "personnage": null
+        },
+        "Bibliothèque": {
+            "description": "Des livres anciens recouvrent chaque mur.",
+            "objets": [
+                "livre magique"
+            ],
+            "directions": {
+                "est": "Entrée",
+                "nord": "Laboratoire"
+            },
+            "enigme": "J’ai des pages mais ne suis pas un oiseau.",
+            "personnage": "Vieil érudit"
+        },
+        "Laboratoire": {
+            "description": "Un laboratoire abandonné rempli d’étranges substances.",
+            "objets": [
+                "clé d’argent"
+            ],
+            "directions": {
+                "sud": "Bibliothèque",
+                "nord": "Hall magique"
+            },
+            "enigme": "Je bouille ou je congèle, invisible mais ressenti. Qui suis-je ?",
+            "personnage": null
+        },
+        "Hall magique": {
+            "description": "Des lumières dansent dans ce vaste hall.",
+            "objets": [
+                "orbe mystique"
+            ],
+            "directions": {
+                "sud": "Laboratoire",
+                "est": "Jardin mystique"
+            },
+            "enigme": "Je parle quand on me frappe. Qui suis-je ?",
+            "personnage": "Maître des portails"
+        },
+        "Jardin mystique": {
+            "description": "Des plantes brillantes et des fleurs inconnues t’entourent.",
+            "objets": [
+                "graines de vie"
+            ],
+            "directions": {
+                "ouest": "Hall magique"
+            },
+            "enigme": "Je pousse sans racines et bois sans bouche. Qui suis-je ?",
+            "personnage": "Esprit de la forêt"
+        },
+        "Cave secrète": {
+            "description": "L’endroit est humide et silencieux. Tu frissonnes.",
+            "objets": [
+                "amulette d’ombre"
+            ],
+            "directions": {
+                "ouest": "Salle du trésor"
+            },
+            "enigme": "Je suis toujours devant vous mais inatteignable. Qui suis-je ?",
+            "personnage": null
+        }
+    },
+    "dialogues": {
+        "Gardien des secrets": "Résous mon énigme, et je te livrerai un indice précieux.",
+        "Vieil érudit": "Connais-tu la légende du livre qui prédit l’avenir ?",
+        "Maître des portails": "Les portails ne s’ouvrent qu’à ceux qui ont l’orbe mystique.",
+        "Esprit de la forêt": "Les graines de vie ne poussent que dans un cœur pur."
+    }
 }
