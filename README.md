@@ -1,110 +1,88 @@
-# Swift Development on Windows
+# 🕹️ Aventure Textuelle en Swift
 
-This repository contains a pre-configured Swift development environment for Windows users. It uses Visual Studio Code and Docker to provide a consistent, easy-to-use environment for learning Swift programming without needing a Mac.
+Bienvenue dans un jeu d’aventure textuel développé en Swift. Incarne un aventurier explorant un donjon rempli d’objets, d’énigmes et de personnages mystérieux à travers 9 salles interconnectées.
 
-## Getting Started
+---
 
-### Prerequisites
+## 🚀 Comment démarrer le jeu
 
-- Windows 10/11 with virtualization enabled
-- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
-- [Visual Studio Code](https://code.visualstudio.com/)
-- Git
+### 🧱 Prérequis
 
-### Quick Setup (Recommended)
+- ✅ [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+- ✅ Git
+- ✅ Visual Studio Code
+- ✅ Accès à Internet (pour le build Docker)
 
-1. **Clone this repository:**
+---
+
+### ⚙️ Étapes de configuration
+
+1. **Cloner le dépôt** :
 
    ```bash
-   git clone https://github.com/GonzoDMX/Swift_Win_Runtime.git
-   cd ./Swift_Win_Runtime
+   git clone https://github.com/yas2-AM/AventureTextuelleSwift.git
+   cd AventureTextuelleSwift
    ```
 
-*Note: You can also use the GitHub desktop app if you prefer.*
+2. **Construire l'image Docker** :
 
-2. **Install Docker Desktop:**
-    - https://www.docker.com/products/docker-desktop/
-    - You do not need to create an account
-    - Must start Docker Desktop before starting VS Code
+   ```bash
+   docker build -t swiftgame .
+   ```
 
-3. **Start coding:**
-   - Open VS Code
-   - Open the project directory
-   - When prompted, click "Reopen in Container"
-   - Wait for the container to build (first time only, may take 5-10 minutes)
-   - You're ready to write Swift code!
+3. **Lancer le jeu** :
 
-## Repositories
+   ```bash
+   docker run -it --rm -v ${PWD}:/app swiftgame
+   ```
 
-- **Examples**: Sample Swift code demonstrating key concepts
-  - **01_hello_world.swift**: Basic hello world program.
-  - **02_variables.swift**: Usage examples for base swift variables.
-  - **03_functions.swift**: Basic Swift functions examples.
-  - **04_foundations.swift**: Examples of common usages for the Foundation library.
+   🔁 Si `${PWD}` ne fonctionne pas, remplace par le chemin absolu entre guillemets :
+   ```bash
+   docker run -it --rm -v "C:\Users\PC\Downloads\AventureTextuelleSwift":/app swiftgame
+   ```
 
-- **Packages**: Empty directory, reserved for your projects.
+---
 
-### Running Swift Code
+## 🧩 Commandes disponibles
 
-In VS Code terminal programs can be tested by using the `swift` command.
+| Commande | Action |
+|----------|--------|
+| 1 à 4    | Se déplacer (Nord, Sud, Est, Ouest) |
+| 5        | Ramasser l’objet présent |
+| 6        | Voir l’inventaire |
+| 7        | Résoudre l’énigme de la salle |
+| 8        | Quitter l’aventure (affiche le score) |
+| 9        | Afficher la carte |
+| 10       | Parler au personnage présent |
+| `aide` ou `?` | Réaffiche les commandes disponibles |
 
-```bash
-// Example usage
-swift main.swift
-```
+---
 
-#### Swift Packages
+## 🧠 Objectif du jeu
 
-For Swift package projects:
-1. Navigate to a directory with a Package.swift file
-2. Use the "Swift Package: Build" and "Swift Package: Run" tasks
+- Explorer toutes les salles
+- Résoudre des énigmes
+- Collecter des objets
+- Atteindre la salle du trésor avec les bons objets pour gagner !
 
-### Keyboard Shortcuts
+---
 
-- **Ctrl+Shift+B**: Run the current Swift file
-- **F5**: Debug the current file/package (requires compilation first)
-- **Ctrl+Shift+P**: Open Command Palette for more options
+## 💾 Système de sauvegarde
 
-## Container Features
+- Une sauvegarde est créée automatiquement après chaque action.
+- Lors du lancement, vous pouvez reprendre la partie précédente.
 
-The Swift development container includes:
+---
 
-- Swift 5.9 toolchain
-- LLDB debugger
-- SourceKit-LSP for code navigation
-- Git for version control
+## 🧑‍💻 À propos
 
-## Troubleshooting
+- Langage : Swift
+- Dépendances : Aucune
+- Environnement : Docker (Swift 5.9+)
+- Auteur : yas2-AM
 
-### Container Fails to Build
+---
 
-- Make sure Docker Desktop is running
-- Try restarting Docker Desktop
-- Check that you have a stable internet connection
+## 📄 Licence
 
-### Swift Commands Not Found
-
-- Make sure the container has finished building
-- Check that you're running commands in the integrated terminal
-- Try reopening VS Code and the container
-
-### VS Code Extensions Not Working
-
-- Make sure you're connected to the development container
-- Check the Extensions panel to see which extensions are enabled
-
-### Need More Help?
-
-- Check the Resources/CommonIssues.md file
-- Post in the course forum
-- Email the instructor or teaching assistant
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Acknowledgements
-
-- [Swift.org](https://swift.org/) for the Swift language and toolchain
-- [Microsoft](https://code.visualstudio.com/) for Visual Studio Code
-- [Docker](https://www.docker.com/) for containerization technology
+Ce projet est sous licence MIT.
