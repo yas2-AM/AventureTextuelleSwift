@@ -5,10 +5,11 @@ struct Sauvegarde: Codable {
     let position: String
     let inventaire: [String]
     let enigmesResolues: Int
+    let enigmesDejaResolues: [String]?
 }
 
-func sauvegarderPartie(nom: String, position: String, inventaire: [String], enigmesResolues: Int) {
-    let sauvegarde = Sauvegarde(nomJoueur: nom, position: position, inventaire: inventaire, enigmesResolues: enigmesResolues)
+func sauvegarderPartie(nom: String, position: String, inventaire: [String], enigmesResolues: Int, enigmesDejaResolues: Set<String>) {
+    let sauvegarde = Sauvegarde(nomJoueur: nom, position: position, inventaire: inventaire, enigmesResolues: enigmesResolues, enigmesDejaResolues: Array(enigmesDejaResolues))
     let chemin = "/app/sauvegarde.json"
     do {
         let data = try JSONEncoder().encode(sauvegarde)
@@ -93,12 +94,14 @@ let dialoguesPersonnages: [String: String] = [
     "Esprit de la forêt": "Les graines de vie ne poussent que dans un cœur pur."
 ]
 
+// État du joueur
 var nomJoueur = ""
 var positionActuelle = "Entrée"
 var inventaire: [String] = []
 var enigmesResolues = 0
 var enigmesDejaResolues: Set<String> = []
 
+// Chargement de la sauvegarde
 if let sauvegarde = chargerSauvegarde() {
     print("💾 Reprendre la dernière partie ? (o/n)")
     if let reponse = readLine(), reponse.lowercased() == "o" {
@@ -106,6 +109,7 @@ if let sauvegarde = chargerSauvegarde() {
         positionActuelle = sauvegarde.position
         inventaire = sauvegarde.inventaire
         enigmesResolues = sauvegarde.enigmesResolues
+        enigmesDejaResolues = Set(sauvegarde.enigmesDejaResolues ?? [])
         print("🔁 Partie chargée pour \(nomJoueur).")
     }
 }
@@ -154,38 +158,33 @@ func verifierVictoire() {
     }
 }
 
+// Boucle principale
 while true {
-    print("\u{001B}[2J")
-    print("\u{001B}[H")
+    print("\u{001B}[2J\u{001B}[H")
 
-    let title = "🌌 " + positionActuelle.uppercased()
-    let border = String(repeating: "═", count: title.count + 4)
-    print("╔\(border)╗")
-    print("║  \(title)  ║")
-    print("╚\(border)╝\n")
+    let titre = "🌌 " + positionActuelle.uppercased()
+    let ligne = String(repeating: "═", count: titre.count + 4)
+    print("╔\(ligne)╗\n║  \(titre)  ║\n╚\(ligne)╝\n")
 
     print("✨ \(descriptionsSalles[positionActuelle] ?? "Un lieu mystérieux.")")
-
     let objets = objetsDansSalles[positionActuelle] ?? []
     print("📦 Objets : \(objets.isEmpty ? "Aucun" : objets.joined(separator: ", "))")
-
     if let enigme = enigmesDansSalles[positionActuelle], !enigmesDejaResolues.contains(positionActuelle) {
         print("🧩 Énigme : \(enigme)")
     } else {
         print("🧩 Énigme : Aucune")
     }
-
     if let perso = personnagesDansSalles[positionActuelle] {
         print("👤 Personnage : \(perso)")
     }
 
-    print("\n🧭 Directions : [1] Nord   [2] Sud   [3] Est   [4] Ouest\n")
+    print("\n🧭 Directions : [1] Nord   [2] Sud   [3] Est   [4] Ouest")
     print("🎮 Actions :")
     print("  5 - Ramasser l’objet       6 - Voir l’inventaire")
     print("  7 - Résoudre l’énigme      8 - Quitter l’aventure")
     print("  9 - Afficher la carte     10 - Parler au personnage")
-    print("      aide / ? - Aide\n")
-    print("➤ Ton choix : ", terminator: "")
+    print("      aide / ? - Aide")
+    print("➤ Ton choix : ", terminator: "")  // ✅ LIGNE CORRIGÉE
 
     guard let saisie = readLine()?.lowercased() else {
         print("❌ Entrée invalide.")
@@ -199,7 +198,6 @@ while true {
 5 - Ramasser l’objet    6 - Voir l’inventaire   7 - Résoudre énigme     8 - Quitter
 9 - Afficher la carte   10 - Parler au personnage   aide / ? - Aide
 """)
-        print("Appuie sur Entrée pour continuer...")
         _ = readLine()
         continue
     }
@@ -216,7 +214,6 @@ while true {
             positionActuelle = prochaine
         } else {
             print("🚫 Impossible d’y aller.")
-            sleep(1)
         }
 
     case 5:
@@ -229,11 +226,9 @@ while true {
         } else {
             print("📭 Aucun objet à ramasser.")
         }
-        sleep(1)
 
     case 6:
         print("🎒 Inventaire : \(inventaire.isEmpty ? "Vide" : inventaire.joined(separator: ", "))")
-        sleep(2)
 
     case 7:
         if let enigme = enigmesDansSalles[positionActuelle], !enigmesDejaResolues.contains(positionActuelle) {
@@ -252,14 +247,12 @@ while true {
         } else {
             print("📭 Pas d’énigme ici ou déjà résolue.")
         }
-        sleep(2)
 
     case 8:
         afficherScoreFinal()
 
     case 9:
         afficherCarte()
-        print("Appuie sur Entrée pour continuer...")
         _ = readLine()
 
     case 10:
@@ -269,14 +262,12 @@ while true {
         } else {
             print("📭 Il n'y a personne à qui parler ici.")
         }
-        print("Appuie sur Entrée pour continuer...")
         _ = readLine()
 
     default:
         print("❌ Option non reconnue.")
-        sleep(1)
     }
 
-    sauvegarderPartie(nom: nomJoueur, position: positionActuelle, inventaire: inventaire, enigmesResolues: enigmesResolues)
+    sauvegarderPartie(nom: nomJoueur, position: positionActuelle, inventaire: inventaire, enigmesResolues: enigmesResolues, enigmesDejaResolues: enigmesDejaResolues)
     verifierVictoire()
 }
